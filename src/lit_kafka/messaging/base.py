@@ -3,11 +3,15 @@ from typing import Callable, Optional
 
 
 class BaseMessaging:
-    def __init__(self, pub_topic: str, sub_topic: str, project: Optional[str] = None):
+    def __init__(
+        self,
+        sub_topic: str,
+        pub_topic: Optional[str] = None,
+        project: Optional[str] = None,
+    ):
         """
         Create a consumer and publisher with topic and Project.
         Args:
-            pub_topic: Topic where msg is published
             sub_topic: Topic from where msg is consumed
             project: Project id is required for GCP
         """

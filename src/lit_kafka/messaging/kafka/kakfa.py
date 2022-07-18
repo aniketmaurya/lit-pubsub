@@ -14,14 +14,14 @@ from ..base import BaseMessaging
 class Kafka(BaseMessaging):
     def __init__(
         self,
-        pub_topic: str,
         sub_topic: str,
         bootstrap_servers: str,
+        pub_topic: Optional[str] = None,
         project: Optional[str] = None,
         group_id: str = "lit_kafka",
         auto_offset: str = "earliest",
     ):
-        super().__init__(pub_topic, sub_topic, project)
+        super().__init__(sub_topic, pub_topic, project)
         self._consumer = Consumer(
             {
                 "bootstrap.servers": bootstrap_servers,
@@ -93,7 +93,6 @@ class Kafka(BaseMessaging):
 class KafkaWork(L.LightningWork):
     def __init__(
         self,
-        pub_topic: str,
         sub_topic: str,
         bootstrap_servers: str,
         project: Optional[str] = None,
@@ -101,18 +100,22 @@ class KafkaWork(L.LightningWork):
         auto_offset: str = "earliest",
     ):
         super().__init__()
-        self.kafka = Kafka(
-            pub_topic,
-            sub_topic,
-            bootstrap_servers=bootstrap_servers,
-            project=project,
-            group_id=group_id,
-            auto_offset=auto_offset,
-        )
+        self.sub_topic = sub_topic
+        self.bootstrap_servers = bootstrap_servers
+        self.project = project
+        self.group_id = group_id
+        self.auto_offset = auto_offset
 
     @staticmethod
     def process_msg(msg):
         print(f"implement this method to process the kafka {msg}")
 
     def run(self, *args, **kwargs):
-        self.kafka.consumer_loop(self.process_msg)
+        kafka = Kafka(
+            self.sub_topic,
+            bootstrap_servers=self.bootstrap_servers,
+            project=self.project,
+            group_id=self.group_id,
+            auto_offset=self.auto_offset,
+        )
+        kafka.consumer_loop(self.process_msg)

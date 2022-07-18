@@ -9,7 +9,6 @@ from lit_kafka.messaging import KafkaWork
 class KafkaRootFlow(L.LightningFlow):
     def __init__(
         self,
-        pub_topic: str,
         sub_topic: str,
         bootstrap_servers: str,
         project: Optional[str] = None,
@@ -22,7 +21,6 @@ class KafkaRootFlow(L.LightningFlow):
         for _ in range(num_partitions):
             kafka_works.append(
                 KafkaWork(
-                    pub_topic,
                     sub_topic,
                     bootstrap_servers,
                     project=project,
@@ -36,3 +34,9 @@ class KafkaRootFlow(L.LightningFlow):
     def run(self, *args, **kwargs) -> None:
         for work in self.kafka_works:
             work.run()
+
+
+if __name__ == "__main__":
+    app = L.LightningApp(
+        KafkaRootFlow("kafka-test", bootstrap_servers="localhost:9092")
+    )
