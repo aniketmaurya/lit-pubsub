@@ -24,6 +24,6 @@ def send_msg(msg: dict, topic=None):
     producer.poll(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     msg = {"msg": "hi"}
     send_msg(msg, topic=TOPIC)

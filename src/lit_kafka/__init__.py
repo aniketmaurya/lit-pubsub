@@ -1,3 +1,3 @@
-from lit_kafka.messaging.kafka import KafkaWork
+from .kafka import KafkaWork
 
 __all__ = ["KafkaWork"]

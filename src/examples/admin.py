@@ -9,7 +9,9 @@ conf = {"bootstrap.servers": bootstrap_servers}
 admin = AdminClient(conf)
 
 if __name__ == "__main__":
-    new_topic = NewTopic(TOPIC, num_partitions=num_partitions, replication_factor=replication_factor)
+    new_topic = NewTopic(
+        TOPIC, num_partitions=num_partitions, replication_factor=replication_factor
+    )
     fs = admin.create_topics(new_topics=[new_topic])
     for topic, f in fs.items():
         try:
