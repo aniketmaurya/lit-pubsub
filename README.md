@@ -23,8 +23,14 @@ This component lets you publish and subscribe to Kafka and GCP PubSub events.
 
 ```python
 import lightning as L
-# TODO: Add Example
 
+from lit_kafka import KafkaRootFlow
+
+
+if __name__ == "__main__":
+    app = L.LightningApp(
+        KafkaRootFlow("kafka-test", bootstrap_servers="localhost:9092", num_partitions=2)
+    )
 ```
 
 ## install
