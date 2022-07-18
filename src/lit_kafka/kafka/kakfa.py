@@ -1,4 +1,5 @@
 import json
+import random
 import socket
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -105,10 +106,10 @@ class KafkaWork(L.LightningWork):
         self.project = project
         self.group_id = group_id
         self.auto_offset = auto_offset
+        self.randname = f"{random.randint(1, 100)}"
 
-    @staticmethod
-    def process_msg(msg):
-        print(f"implement this method to process the kafka {msg}")
+    def process_msg(self, msg):
+        print(f"{self.randname} implement this method to process the kafka {msg}")
 
     def run(self, *args, **kwargs):
         kafka = Kafka(
