@@ -1,9 +1,9 @@
-from typing import Optional, List
+from typing import List, Optional
 
 import lightning as L
 from lightning.app.structures import List as LightningList
 
-from lit_kafka import KafkaWork
+from .kafka import KafkaWork
 
 
 class KafkaRootFlow(L.LightningFlow):
@@ -38,5 +38,7 @@ class KafkaRootFlow(L.LightningFlow):
 
 if __name__ == "__main__":
     app = L.LightningApp(
-        KafkaRootFlow("kafka-test", bootstrap_servers="localhost:9092", num_partitions=2)
+        KafkaRootFlow(
+            "kafka-test", bootstrap_servers="localhost:9092", num_partitions=2
+        )
     )
