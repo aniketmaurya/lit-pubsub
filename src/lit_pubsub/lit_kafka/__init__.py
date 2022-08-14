@@ -1,4 +1,4 @@
 from .app import KafkaRootFlow
-from .kafka import KafkaWork
+from lit_pubsub.lit_kafka.kakfa import KafkaWork
 
 __all__ = ["KafkaWork", "KafkaRootFlow"]

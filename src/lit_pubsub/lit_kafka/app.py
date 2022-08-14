@@ -3,7 +3,7 @@ from typing import List, Optional
 import lightning as L
 from lightning.app.structures import List as LightningList
 
-from .kafka import KafkaWork
+from lit_pubsub.lit_kafka import KafkaWork
 
 
 class KafkaRootFlow(L.LightningFlow):
