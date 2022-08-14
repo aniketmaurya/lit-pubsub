@@ -29,7 +29,7 @@ class KafkaRootFlow(L.LightningFlow):
                 )
             )
 
-        self.kafka_works: List[L.LightningWork] = LightningList(*kafka_works)
+        self.kafka_works: List[KafkaWork] = LightningList(*kafka_works)
 
     def run(self, *args, **kwargs) -> None:
         for work in self.kafka_works:
