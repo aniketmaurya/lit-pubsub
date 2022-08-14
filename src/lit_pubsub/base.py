@@ -1,5 +1,5 @@
 import json
-from typing import Callable, Optional
+from typing import Any, Callable, Optional
 
 
 class BaseMessaging:
@@ -18,9 +18,9 @@ class BaseMessaging:
         self.pub_topic = pub_topic
         self.sub_topic = sub_topic
         self.project = project
-        self._publisher = None
-        self._consumer = None
-        self._executor = None
+        self._publisher: Any = None
+        self._consumer: Any = None
+        self._executor: Any = None
 
     def _create_pubsub(self):
         """Create either kafka or GCP PubSub consumer & publisher"""

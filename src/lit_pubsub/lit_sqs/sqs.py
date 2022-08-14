@@ -9,7 +9,6 @@ import boto3
 import lightning as L
 from confluent_kafka import Consumer, KafkaError, KafkaException, Producer
 from loguru import logger
-
 from pubsub.base import BaseMessaging
 
 
@@ -54,10 +53,9 @@ class SQSWork(L.LightningWork):
         super().__init__()
         self.sub_topic = sub_topic
         self.project = project
-        self.randname = f"{random.randint(1, 100)}"
 
     def process_msg(self, msg):
-        print(f"{self.randname} implement this method to process the kafka {msg}")
+        print(f"processed {msg}")
 
     def run(self, *args, **kwargs):
         sqs = SQS(

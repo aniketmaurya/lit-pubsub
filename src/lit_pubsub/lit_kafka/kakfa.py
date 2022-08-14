@@ -98,10 +98,9 @@ class KafkaWork(L.LightningWork):
         self.project = project
         self.group_id = group_id
         self.auto_offset = auto_offset
-        self.randname = f"{random.randint(1, 100)}"
 
     def process_msg(self, msg):
-        print(f"{self.randname} implement this method to process the kafka {msg}")
+        print(f"processed {msg}")
 
     def run(self, *args, **kwargs):
         kafka = Kafka(
