@@ -9,7 +9,7 @@ import lightning as L
 from confluent_kafka import Consumer, KafkaError, KafkaException, Producer
 from loguru import logger
 
-from pubsub.base import BaseMessaging
+from lit_pubsub.base import BaseMessaging
 
 
 class Kafka(BaseMessaging):

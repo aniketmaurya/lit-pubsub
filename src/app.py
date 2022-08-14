@@ -1,6 +1,6 @@
 import lightning as L
 
-from lit_kafka import KafkaRootFlow
+from lit_pubsub.lit_kafka import KafkaRootFlow
 
 if __name__ == "__main__":
     app = L.LightningApp(
