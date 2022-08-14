@@ -67,14 +67,6 @@ class Kafka(BaseMessaging):
             decoded_msg = json.loads(msg.value().decode("utf-8"))
         return decoded_msg
 
-    def done_callback(self, future):
-        print(f"{future.result()} completed")
-
-    def async_process(self, msg, func):
-        future = self._executor.submit(func, msg)
-        future.add_done_callback(self.done_callback)
-        return future
-
     def consumer_loop(self, process_msg: Callable, max_workers=None):
         """"""
         self._executor = ThreadPoolExecutor(max_workers=max_workers)

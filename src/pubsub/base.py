@@ -20,6 +20,7 @@ class BaseMessaging:
         self.project = project
         self._publisher = None
         self._consumer = None
+        self._executor = None
 
     def _create_pubsub(self):
         """Create either kafka or GCP PubSub consumer & publisher"""
@@ -35,3 +36,11 @@ class BaseMessaging:
 
     def consumer_loop(self, process_msg: Callable):
         """Define async consumer loop"""
+
+    def done_callback(self, future):
+        print(f"{future.result()} completed")
+
+    def async_process(self, msg, func):
+        future = self._executor.submit(func, msg)
+        future.add_done_callback(self.done_callback)
+        return future

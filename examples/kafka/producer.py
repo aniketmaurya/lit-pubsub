@@ -26,5 +26,5 @@ def send_msg(msg: dict, topic=None):
 
 if __name__ == "__main__":
     for i in range(4):
-        msg = {"msg": f"hi-{i}"}
+        msg = {"msg": f"hi souvik on call{i}"}
         send_msg(msg, topic=TOPIC)
