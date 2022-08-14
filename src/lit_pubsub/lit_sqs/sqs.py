@@ -21,9 +21,8 @@ class SQS(BaseMessaging):
         project: Optional[str] = None,
     ):
         super().__init__(sub_topic, pub_topic, project)
-        sqs = boto3.resource('sqs')
-        self.queue = sqs.get_queue_by_name(QueueName='test')
-
+        sqs = boto3.resource("sqs")
+        self.queue = sqs.get_queue_by_name(QueueName="test")
 
     def _delivery_report(self, err, msg):
         if err is not None:
@@ -37,7 +36,10 @@ class SQS(BaseMessaging):
         self._publisher.produce(self.pub_topic, msg, callback=self._delivery_report)
         self._publisher.flush()
 
-    def consumer_loop(self, process_msg: Callable, ):
+    def consumer_loop(
+        self,
+        process_msg: Callable,
+    ):
         """"""
         for msg in self.queue.receive_messages():
             self.async_process(msg, process_msg)
