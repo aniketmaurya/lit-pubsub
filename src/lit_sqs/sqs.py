@@ -17,11 +17,8 @@ class SQS(BaseMessaging):
     def __init__(
         self,
         sub_topic: str,
-        bootstrap_servers: str,
         pub_topic: Optional[str] = None,
         project: Optional[str] = None,
-        group_id: str = "lit_kafka",
-        auto_offset: str = "earliest",
     ):
         super().__init__(sub_topic, pub_topic, project)
         sqs = boto3.resource('sqs')
@@ -46,32 +43,22 @@ class SQS(BaseMessaging):
             self.async_process(msg, process_msg)
 
 
-class KafkaWork(L.LightningWork):
+class SQSWork(L.LightningWork):
     def __init__(
         self,
         sub_topic: str,
-        bootstrap_servers: str,
         project: Optional[str] = None,
-        group_id: str = "lit_kafka",
-        auto_offset: str = "earliest",
     ):
         super().__init__()
         self.sub_topic = sub_topic
-        self.bootstrap_servers = bootstrap_servers
         self.project = project
-        self.group_id = group_id
-        self.auto_offset = auto_offset
         self.randname = f"{random.randint(1, 100)}"
 
     def process_msg(self, msg):
         print(f"{self.randname} implement this method to process the kafka {msg}")
 
     def run(self, *args, **kwargs):
-        kafka = SQS(
+        sqs = SQS(
             self.sub_topic,
-            bootstrap_servers=self.bootstrap_servers,
-            project=self.project,
-            group_id=self.group_id,
-            auto_offset=self.auto_offset,
         )
-        kafka.consumer_loop(self.process_msg)
+        sqs.consumer_loop(self.process_msg)
