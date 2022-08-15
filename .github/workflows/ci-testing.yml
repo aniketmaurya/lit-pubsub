@@ -49,19 +49,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-py${{ matrix.python-version }}-
 
-    - name: Clone Lightning Repo
-      uses: actions/checkout@v3
-      with:
-        repository: PyTorchLightning/lightning
-        token: ${{ secrets.PAT_GHOST }}
-        ref: 'master'
-        path: lightning
-
     - name: Install Lightning
       run: |
-        cd lightning
-        pip install -r requirements.txt
-        pip install -e .
+        pip install lightning
       shell: bash
 
     - name: Install dependencies
@@ -69,7 +59,7 @@ jobs:
         python --version
         pip --version
         pip install --requirement requirements.txt --upgrade --quiet --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-        pip install --requirement tests/requirements.txt --quiet
+        pip install --requirement src/tests/requirements.txt --quiet
         pip list
       shell: bash
 
@@ -78,7 +68,7 @@ jobs:
         SLACK_CHANNEL_ID: ${{secrets.SLACK_CHANNEL_ID}}
         SLACK_TOKEN: ${{secrets.SLACK_TOKEN}}
       run: |
-        coverage run --source src/lit_pubsub -m py.test lit_slack tests -v --junitxml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
+        coverage run --source src/lit_pubsub -m py.test lit_pubsub tests -v --junitxml=junit/test-results-${{ runner.os }}-${{ matrix.python-version }}.xml
 
     - name: Statistics
       if: success()
