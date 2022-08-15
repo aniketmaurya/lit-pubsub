@@ -12,5 +12,5 @@ setup(
     url="https://github.com/aniketmaurya/lit-pubsub",
     install_requires=[],
     packages=find_packages(),
-    package_dir={'': 'src'},
+    package_dir={"": "src"},
 )
