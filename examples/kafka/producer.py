@@ -1,4 +1,6 @@
 import json
+from rich.progress import track
+
 import socket
 
 from confluent_kafka import Producer
@@ -25,6 +27,6 @@ def send_msg(msg: dict, topic=None):
 
 
 if __name__ == "__main__":
-    for i in range(4):
-        msg = {"msg": f"hi souvik on call{i}"}
+    for i in track(range(4)):
+        msg = {"msg": f"this is msg-{i}"}
         send_msg(msg, topic=TOPIC)
