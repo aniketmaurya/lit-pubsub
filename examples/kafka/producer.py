@@ -1,10 +1,9 @@
 import json
-from rich.progress import track
-
 import socket
 
 from confluent_kafka import Producer
 from loguru import logger
+from rich.progress import track
 
 TOPIC = "kafka-test"
 bootstrap_servers = "localhost:9092"
